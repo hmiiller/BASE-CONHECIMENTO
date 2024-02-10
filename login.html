@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.8.11/tailwind.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="bg-gray-200">
+    <div class="container mx-auto flex justify-center items-center h-screen">
+      <div class="bg-white rounded p-10 shadow-md w-full md:w-1/3">
+        <div class="flex items-center justify-center mb-4">
+          <img src="logo.png" alt="Logo" class="w-32 h-auto" />
+          <!-- Mantém o tamanho padrão da logo -->
+        </div>
+        <h1 class="text-3xl font-bold text-center mb-4">
+          BASE DE CONHECIMENTOS
+        </h1>
+        <p class="text-sm text-gray-700 text-center mb-4">
+          Gerência de Infraestrutura e Serviços - GEIS
+        </p>
+        <form id="login-form">
+          <div class="my-4">
+            <label for="username" class="text-gray-900">Login:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="border block w-full p-2 mt-2 rounded"
+              placeholder="Digite o Usuário"
+            />
+          </div>
+          <div class="my-4">
+            <label for="password" class="text-gray-900">Senha:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="border block w-full p-2 mt-2 rounded"
+              placeholder="Digite a Senha"
+            />
+          </div>
+          <button
+            type="submit"
+            class="bg-black text-white py-2 mt-4 w-full rounded"
+          >
+            Entrar
+          </button>
+        </form>
+        <a href="templates/signup.html" class="block text-center mt-2 text-gray-700"
+          >Criar conta</a
+        >
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("login-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          var username = document.getElementById("username").value;
+          var password = document.getElementById("password").value;
+
+          fetch("http://localhost:5000/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: username,
+              password: password,
+            }),
+          })
+            .then((response) => {
+              if (response.ok) {
+                return response.json();
+              } else {
+                throw new Error("Failed to login");
+              }
+            })
+            .then((data) => {
+              console.log("Token:", data.token);
+              // Redirecionar para a página principal ou fazer outra ação após o login
+              window.location.href = "pagina_principal.html";
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert("Falha no login. Verifique suas credenciais.");
+            });
+        });
+    </script>
+  </body>
+</html>
