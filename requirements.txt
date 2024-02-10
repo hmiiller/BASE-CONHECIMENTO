@@ -101,3 +101,5 @@ websockets==11.0.3
 Werkzeug==3.0.1
 whitenoise==6.6.0
 wxPython==4.2.1
+pyenv==3.8.1
+python==3.7.4
